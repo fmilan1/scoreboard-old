@@ -147,13 +147,14 @@ body {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    transform: translateY(25px);
 }
 
 .timer-container {
     position: absolute;
     max-width: 500px;
     width: 50%;
-    height: 5%;
+    height: 50px;
     background-color: white;
     border-right: 10px solid black;
     border-bottom: 10px solid black;
@@ -209,8 +210,6 @@ body {
     font-size: .3em;
     cursor: pointer;
     width: 100%;
-    /* height: 100%; */
-    /* height: 70px; */
     display: flex;
     justify-content: center;
     align-items: center;
