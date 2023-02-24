@@ -25,6 +25,10 @@ let team2name = document.querySelector("#team-2").children[2];
 let team1nametextbox = document.querySelector("#team-1-name-textbox");
 let team2nametextbox = document.querySelector("#team-2-name-textbox");
 
+
+team1nametextbox.addEventListener("input", () => {refresh_teams();})
+team2nametextbox.addEventListener("input", () => {refresh_teams();})
+
 let root = document.documentElement;
 
 team1point.addEventListener("mousedown", teamclick);
@@ -37,15 +41,18 @@ let settings = document.querySelector("#settings");
 let settings_menu = document.querySelector("#settings-menu");
 
 let team1colorpicker = settings_menu.children[0].children[1];
-let team2colorpicker = settings_menu.children[1].children[1];
+let team2colorpicker = settings_menu.children[0].children[3];
+
+team1colorpicker.addEventListener("input", () => {refresh_teams();})
+team2colorpicker.addEventListener("input", () => {refresh_teams();})
 
 let pauseplaybtn = document.querySelector("#pauseplay");
 pauseplaybtn.addEventListener("click", pauseplay_timer)
 let restarttimebtn = document.querySelector("#restart");
 restarttimebtn.addEventListener("click", reset);
 
-let editbtn = document.querySelector("#edit");
-editbtn.addEventListener("click", edit);
+let teamnamecheckbox = document.querySelector("#team-names-checkbox");
+teamnamecheckbox.addEventListener("change", () => { team1name.classList.toggle("hidden"); team2name.classList.toggle("hidden"); })
 
 let starttimetextbox = document.querySelector("#starttime");
 
@@ -129,6 +136,7 @@ function refresh_teams() {
 
     root.style.setProperty("--team-1-color", team1colorpicker.value)
     root.style.setProperty("--team-2-color", team2colorpicker.value)
+    save();
 }
 
 function load() {
@@ -171,8 +179,6 @@ function save() {
 }
 
 function settingsclick() {
-    refresh_teams();
-    save();
     settings_menu.classList.toggle("hidden");
 }
 
