@@ -35,6 +35,11 @@ let root = document.documentElement;
 team1point.addEventListener("mousedown", teamclick);
 team2point.addEventListener("mousedown", teamclick);
 
+team1point.addEventListener("long-press", () => {team1point.innerHTML = 0; save()})
+team2point.addEventListener("long-press", () => {team2point.innerHTML = 0; save()})
+team1subpoint.addEventListener("long-press", () => {team1subpoint.innerHTML = 0; save()})
+team2subpoint.addEventListener("long-press", () => {team2subpoint.innerHTML = 0; save()})
+
 team1subpoint.addEventListener("mousedown", teamclick);
 team2subpoint.addEventListener("mousedown", teamclick);
 
@@ -57,6 +62,9 @@ teamnamescheckbox.addEventListener("input", () => { togglenames(); save(); })
 
 let starttimetextbox = document.querySelector("#starttime");
 starttimetextbox.addEventListener("input", save)
+
+let resetbtn = document.querySelector("#resetbtn");
+resetbtn.addEventListener("click", resetpoints)
 
 settings.addEventListener("click", settingsclick);
 
@@ -90,6 +98,13 @@ function tick() {
     }
 }
 
+function resetpoints() {
+    team1point.innerHTML = 0;
+    team2point.innerHTML = 0;
+    team1subpoint.innerHTML = 0;
+    team2subpoint.innerHTML = 0;
+    save();
+}
 
 function pauseplay_timer() {
     running = !running;
@@ -116,6 +131,7 @@ function reset() {
     if (hours % 1 != 0) hours = 0;
     time_in_seconds = hours * 3600 + mins * 60 + secs;
     timer.innerHTML = seconds2HHMMSS(time_in_seconds);
+    timer.inner
 }
 
 function teamclick(e) {

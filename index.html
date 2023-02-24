@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
+    <script src="long-press-event.js"></script>
     <title>Scoreboard</title>
 </head>
 <body>
@@ -19,13 +20,14 @@
             <input type="text" id="team-2-name-textbox" value="Team 2">
             <input type="color" class="colorpicker" value="#ff0064">
 
-            <div>Name labels</div>
+            Name labels
             <input type="checkbox" id="team-names-checkbox" checked="true">
 
             <input type="text" id="starttime" value="00:00:00">
             <input type="checkbox" id="timer-checkbox">
 
-
+            
+            <input type="button" value="Reset Points" id="resetbtn" onclick="reset">
         </div>
     </div>
     <div class="container">
@@ -35,13 +37,13 @@
             <img src="imgs/play.svg" id="pauseplay">
         </div>  
         <div class="team" id="team-1">
-            <div class="point-text">0</div>
-            <div class="subpoint-text">0</div>
+            <div class="point-text point">0</div>
+            <div class="subpoint-text point">0</div>
             <div class="name-text"></div>
         </div>
         <div class="team" id="team-2">
-            <div class="point-text">0</div>
-            <div class="subpoint-text">0</div>
+            <div class="point-text point">0</div>
+            <div class="subpoint-text point">0</div>
             <div class="name-text"></div>
         </div>
     </div>
