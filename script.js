@@ -4,6 +4,7 @@ document.addEventListener('contextmenu', event => event.preventDefault());
 let fullscreened = false;
 let fullscreenbtn = document.querySelector("#fullscreen")
 fullscreenbtn.addEventListener("click", fullscreen)
+let countdown;
 
 
 function fullscreen() {
@@ -89,16 +90,21 @@ function tick() {
     }
 }
 
-let countdown;
 
 function pauseplay_timer() {
-    pauseplaybtn.classList.toggle("pause");
     running = !running;
-    if (running) countdown = setInterval(tick, 1000)
-    else clearInterval(countdown)
+    if (running && time_in_seconds > 0) {
+        countdown = setInterval(tick, 1000);
+        pauseplaybtn.classList.add("pause");
+    }
+    else {
+        clearInterval(countdown)
+        pauseplaybtn.classList.remove("pause");
+    }
 }
 
 function reset() {
+    clearInterval(countdown)
     pauseplaybtn.classList.remove("pause");
     running = false;
     let t = starttimetextbox.value.split(":");
@@ -173,5 +179,3 @@ function settingsclick() {
     settings.classList.toggle("rotate")
     settings_menu.classList.toggle("hidden");
 }
-
-
