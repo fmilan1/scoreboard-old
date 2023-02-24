@@ -26,8 +26,8 @@ let team1nametextbox = document.querySelector("#team-1-name-textbox");
 let team2nametextbox = document.querySelector("#team-2-name-textbox");
 
 
-team1nametextbox.addEventListener("input", () => {refresh_teams();})
-team2nametextbox.addEventListener("input", () => {refresh_teams();})
+team1nametextbox.addEventListener("input", () => {refresh_teams();save();})
+team2nametextbox.addEventListener("input", () => {refresh_teams();save();})
 
 let root = document.documentElement;
 
@@ -43,18 +43,19 @@ let settings_menu = document.querySelector("#settings-menu");
 let team1colorpicker = settings_menu.children[0].children[1];
 let team2colorpicker = settings_menu.children[0].children[3];
 
-team1colorpicker.addEventListener("input", () => {refresh_teams();})
-team2colorpicker.addEventListener("input", () => {refresh_teams();})
+team1colorpicker.addEventListener("input", () => {refresh_teams();save();})
+team2colorpicker.addEventListener("input", () => {refresh_teams();save();})
 
 let pauseplaybtn = document.querySelector("#pauseplay");
 pauseplaybtn.addEventListener("click", pauseplay_timer)
 let restarttimebtn = document.querySelector("#restart");
 restarttimebtn.addEventListener("click", reset);
 
-let teamnamecheckbox = document.querySelector("#team-names-checkbox");
-teamnamecheckbox.addEventListener("change", () => { team1name.classList.toggle("hidden"); team2name.classList.toggle("hidden"); })
+let teamnamescheckbox = document.querySelector("#team-names-checkbox");
+teamnamescheckbox.addEventListener("input", () => { togglenames(); save(); })
 
 let starttimetextbox = document.querySelector("#starttime");
+starttimetextbox.addEventListener("input", save)
 
 settings.addEventListener("click", settingsclick);
 
@@ -67,25 +68,9 @@ let editing = false;
 load()
 refresh_teams()
 
-function edit() {
-    editing = !editing;
-    editbtn.classList.toggle("edit");
-    timer.classList.toggle("hidden");
-    starttimetextbox.classList.toggle("hidden");
-    pauseplaybtn.classList.toggle("hidden");
-    if (!editing) {
-        let t = starttimetextbox.value.split(":");
-        let secs = parseInt(t[t.length-1]);
-        if (secs % 1 != 0) secs = 0;
-        let mins = parseInt(t[t.length-2]);
-        if (mins % 1 != 0) mins = 0;
-        let hours = parseInt(t[t.length-3]);
-        if (hours % 1 != 0) hours = 0;
-        console.log(hours + " " + mins + " " + secs)
-        time_in_seconds = hours * 3600 + mins * 60 + secs;
-        timer.innerHTML = seconds2HHMMSS(time_in_seconds);
-        save();
-    }
+function togglenames() {
+    team1name.classList.toggle("hidden");
+    team2name.classList.toggle("hidden");
 }
 
 function seconds2HHMMSS(seconds) {
@@ -96,29 +81,35 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function tick() {
-    timer.innerHTML = seconds2HHMMSS(time_in_seconds);
-    if (!running || time_in_seconds <= 0) return;
-    await sleep(1000);
+function tick() {
     time_in_seconds -= 1;
-    tick();
+    timer.innerHTML = seconds2HHMMSS(time_in_seconds);
+    if (time_in_seconds <= 0) {
+        pauseplay_timer()
+    }
 }
+
+let countdown;
 
 function pauseplay_timer() {
     pauseplaybtn.classList.toggle("pause");
     running = !running;
-    tick();
+    if (running) countdown = setInterval(tick, 1000)
+    else clearInterval(countdown)
 }
 
-async function reset() {
+function reset() {
     pauseplaybtn.classList.remove("pause");
-    running = !running;
-    team1point.innerHTML = 0;
-    team2point.innerHTML = 0;
-    team1subpoint.innerHTML = 0;
-    team2subpoint.innerHTML = 0;
-    await sleep(1000);
-    timer.innerHTML = seconds2HHMMSS(localStorage.getItem("starttime"));
+    running = false;
+    let t = starttimetextbox.value.split(":");
+    let secs = parseInt(t[t.length-1]);
+    if (secs % 1 != 0) secs = 0;
+    let mins = parseInt(t[t.length-2]);
+    if (mins % 1 != 0) mins = 0;
+    let hours = parseInt(t[t.length-3]);
+    if (hours % 1 != 0) hours = 0;
+    time_in_seconds = hours * 3600 + mins * 60 + secs;
+    timer.innerHTML = seconds2HHMMSS(time_in_seconds);
     save()
 }
 
@@ -136,7 +127,6 @@ function refresh_teams() {
 
     root.style.setProperty("--team-1-color", team1colorpicker.value)
     root.style.setProperty("--team-2-color", team2colorpicker.value)
-    save();
 }
 
 function load() {
@@ -155,9 +145,11 @@ function load() {
         team1subpoint.innerHTML = localStorage.getItem("team1subpoint");
         team2subpoint.innerHTML = localStorage.getItem("team2subpoint");
         
-        time_in_seconds = localStorage.getItem("starttime");
+        starttimetextbox.value = localStorage.getItem("starttime");
+        reset();
         
-        starttimetextbox.value = seconds2HHMMSS(time_in_seconds);
+        teamnamescheckbox.checked = localStorage.getItem("teamnames") == "true" ? true : false;
+        if (!teamnamescheckbox.checked) togglenames();
     }
     timer.innerHTML = seconds2HHMMSS(time_in_seconds);
 
@@ -172,13 +164,14 @@ function save() {
     localStorage.setItem("team2name", team2nametextbox.value)
     localStorage.setItem("team1color", team1colorpicker.value)
     localStorage.setItem("team2color", team2colorpicker.value)
-    localStorage.setItem("starttime", time_in_seconds)
+    localStorage.setItem("starttime", starttimetextbox.value)
     localStorage.setItem("team1subpoint", team1subpoint.innerHTML)
     localStorage.setItem("team2subpoint", team2subpoint.innerHTML)
-
+    localStorage.setItem("teamnames", teamnamescheckbox.checked)
 }
 
 function settingsclick() {
+    settings.classList.toggle("rotate")
     settings_menu.classList.toggle("hidden");
 }
 
