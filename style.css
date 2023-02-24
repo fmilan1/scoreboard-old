@@ -52,9 +52,8 @@ body {
 .settings-team-container {
     width: 80%;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: repeat(2, 50%);
     grid-auto-rows: 2.7em;
-    justify-content: space-between;
     align-items: center;
 }
 
@@ -68,6 +67,7 @@ input[type="checkbox"], .colorpicker {
     height: 2em;
     width: 2em;
     margin: 0;
+    justify-self: end;
 }
 
 .hidden {
