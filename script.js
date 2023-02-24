@@ -64,7 +64,18 @@ let starttimetextbox = document.querySelector("#starttime");
 starttimetextbox.addEventListener("input", save)
 
 let resetbtn = document.querySelector("#resetbtn");
-resetbtn.addEventListener("click", resetpoints)
+resetbtn.addEventListener("click", resetpoints);
+
+
+
+let timercheckbox = document.querySelector("#timer-checkbox");
+timercheckbox.addEventListener("input", () => {
+    toggletimer();
+    save();
+})
+
+let timercontainer = document.querySelector(".timer-container");
+
 
 settings.addEventListener("click", settingsclick);
 
@@ -76,6 +87,12 @@ let editing = false;
 
 load()
 refresh_teams()
+
+function toggletimer() {
+    timercontainer.classList.toggle("hidden");
+    document.querySelector("#team-1").classList.toggle("big");
+    document.querySelector("#team-2").classList.toggle("big");
+}
 
 function togglenames() {
     team1name.classList.toggle("hidden");
@@ -171,6 +188,9 @@ function load() {
         
         teamnamescheckbox.checked = localStorage.getItem("teamnames") == "true" ? true : false;
         if (!teamnamescheckbox.checked) togglenames();
+
+        timercheckbox.checked = localStorage.getItem("timer") == "true" ? true : false;
+        if (!timercheckbox.checked) toggletimer();
     }
     timer.innerHTML = seconds2HHMMSS(time_in_seconds);
 
@@ -189,6 +209,7 @@ function save() {
     localStorage.setItem("team1subpoint", team1subpoint.innerHTML)
     localStorage.setItem("team2subpoint", team2subpoint.innerHTML)
     localStorage.setItem("teamnames", teamnamescheckbox.checked)
+    localStorage.setItem("timer", timercheckbox.checked)
 }
 
 function settingsclick() {
