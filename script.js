@@ -110,7 +110,6 @@ function reset() {
     if (hours % 1 != 0) hours = 0;
     time_in_seconds = hours * 3600 + mins * 60 + secs;
     timer.innerHTML = seconds2HHMMSS(time_in_seconds);
-    save()
 }
 
 function teamclick(e) {
