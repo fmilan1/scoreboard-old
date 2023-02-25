@@ -60,8 +60,14 @@ restarttimebtn.addEventListener("click", reset);
 let teamnamescheckbox = document.querySelector("#team-names-checkbox");
 teamnamescheckbox.addEventListener("input", () => { togglenames(); save(); })
 
-let starttimetextbox = document.querySelector("#starttime");
-starttimetextbox.addEventListener("input", save)
+let starttimehourstextbox = document.querySelector("#starttime-hours");
+starttimehourstextbox.addEventListener("input", save)
+
+let starttimeminstextbox = document.querySelector("#starttime-mins");
+starttimeminstextbox.addEventListener("input", save)
+
+let starttimesecstextbox = document.querySelector("#starttime-secs");
+starttimesecstextbox.addEventListener("input", save)
 
 let resetbtn = document.querySelector("#resetbtn");
 resetbtn.addEventListener("click", resetpoints);
@@ -139,16 +145,18 @@ function reset() {
     clearInterval(countdown)
     pauseplaybtn.classList.remove("pause");
     running = false;
-    let t = starttimetextbox.value.split(":");
-    let secs = parseInt(t[t.length-1]);
+
+    let secs = parseInt(starttimesecstextbox.value);
     if (secs % 1 != 0) secs = 0;
-    let mins = parseInt(t[t.length-2]);
+
+    let mins = parseInt(starttimeminstextbox.value);
     if (mins % 1 != 0) mins = 0;
-    let hours = parseInt(t[t.length-3]);
+
+    let hours = parseInt(starttimehourstextbox.value);
     if (hours % 1 != 0) hours = 0;
+
     time_in_seconds = hours * 3600 + mins * 60 + secs;
     timer.innerHTML = seconds2HHMMSS(time_in_seconds);
-    timer.inner
 }
 
 function teamclick(e) {
@@ -183,7 +191,9 @@ function load() {
         team1subpoint.innerHTML = localStorage.getItem("team1subpoint");
         team2subpoint.innerHTML = localStorage.getItem("team2subpoint");
         
-        starttimetextbox.value = localStorage.getItem("starttime");
+        starttimehourstextbox.value = localStorage.getItem("starttimehours");
+        starttimeminstextbox.value = localStorage.getItem("starttimemins");
+        starttimesecstextbox.value = localStorage.getItem("starttimesecs");
         reset();
         
         teamnamescheckbox.checked = localStorage.getItem("teamnames") == "true" ? true : false;
@@ -205,7 +215,9 @@ function save() {
     localStorage.setItem("team2name", team2nametextbox.value)
     localStorage.setItem("team1color", team1colorpicker.value)
     localStorage.setItem("team2color", team2colorpicker.value)
-    localStorage.setItem("starttime", starttimetextbox.value)
+    localStorage.setItem("starttimehours", starttimehourstextbox.value)
+    localStorage.setItem("starttimemins", starttimeminstextbox.value)
+    localStorage.setItem("starttimesecs", starttimesecstextbox.value)
     localStorage.setItem("team1subpoint", team1subpoint.innerHTML)
     localStorage.setItem("team2subpoint", team2subpoint.innerHTML)
     localStorage.setItem("teamnames", teamnamescheckbox.checked)
