@@ -233,4 +233,13 @@ img:hover {
 
 .multiple-items {
     display: flex;
+    justify-content: space-around;
+}
+
+.first-column {
+    grid-column-start: 1;
+}
+
+.bottom-text {
+    align-self: flex-end;
 }

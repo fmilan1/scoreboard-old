@@ -24,16 +24,21 @@
             Name labels
             <input type="checkbox" id="team-names-checkbox" checked="true">
 
-            <div class="multiple-items">
+            <div class="multiple-items bottom-text">
+                <div>Hours</div>
+                <div>Mins</div>
+                <div>Secs</div>
+            </div>
+            <div class="multiple-items first-column">
                 <input type="number" inputmode="numeric" id="starttime-hours" value="0" min="0" max="23">
                 <input type="number" inputmode="numeric" id="starttime-mins" value="50" min="0" max="59">
                 <input type="number" inputmode="numeric" id="starttime-secs" value="0" min="0" max="59">
                 
             </div>
             <input type="checkbox" id="timer-checkbox" checked="true">
+
+            <input type="button" value="Reset Points" id="resetbtn" class="first-column">
             
-            
-            <input type="button" value="Reset Points" id="resetbtn">
         </div>
     </div>
     <div class="container">
