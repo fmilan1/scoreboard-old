@@ -74,6 +74,18 @@ resetbtn.addEventListener("click", resetpoints);
 
 
 
+let checkwins = false;
+let gamematchcheckbox = document.querySelector("#game-match-checkbox");
+gamematchcheckbox.addEventListener("input", () => {
+    checkwins = gamematchcheckbox.checked
+})
+
+let gameto = document.querySelector("#game-to");
+gameto.addEventListener("input", save)
+let matchto = document.querySelector("#match-to");
+matchto.addEventListener("input", save)
+
+
 let timercheckbox = document.querySelector("#timer-checkbox");
 timercheckbox.addEventListener("input", () => {
     toggletimer();
@@ -164,6 +176,21 @@ function teamclick(e) {
     if (e.button == 2) a = -1;
     let target = e.target;
     target.innerHTML = parseInt(target.innerHTML) + a;
+
+    if (checkwins) {
+        if (parseInt(target.innerHTML) >= gameto.value && !target.classList.contains("subpoint-text")) {
+            team1point.innerHTML = "0";        
+            team2point.innerHTML = "0";        
+            target.parentElement.children[1].innerHTML = parseInt(target.parentElement.children[1].innerHTML) + 1;
+        }
+        if (parseInt(team1subpoint.innerHTML) >= matchto.value) {
+            alert(team1name.innerHTML + " wins!");
+        }
+        else if (parseInt(team2subpoint.innerHTML) >= matchto.value) {
+            alert(team2name.innerHTML + " wins!");
+        }
+    }
+
     save();
 }
 
@@ -201,6 +228,12 @@ function load() {
 
         timercheckbox.checked = localStorage.getItem("timer") == "true" ? true : false;
         if (!timercheckbox.checked) toggletimer();
+
+        gamematchcheckbox.checked = localStorage.getItem("gamematch") == "true" ? true : false;
+        checkwins = gamematchcheckbox.checked;
+
+        gameto.value = localStorage.getItem("gameto")
+        matchto.value = localStorage.getItem("matchto")
     }
     timer.innerHTML = seconds2HHMMSS(time_in_seconds);
 
@@ -222,6 +255,9 @@ function save() {
     localStorage.setItem("team2subpoint", team2subpoint.innerHTML)
     localStorage.setItem("teamnames", teamnamescheckbox.checked)
     localStorage.setItem("timer", timercheckbox.checked)
+    localStorage.setItem("gamematch", gamematchcheckbox.checked)
+    localStorage.setItem("gameto", gameto.value)
+    localStorage.setItem("matchto", matchto.value)
 }
 
 function settingsclick() {

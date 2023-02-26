@@ -14,7 +14,7 @@
     <img src="imgs/fullscreen.svg" id="fullscreen">
     <img src="imgs/settings.svg" id="settings">
     <div id="settings-menu" class="hidden">
-        <div class="settings-team-container">
+        <div class="settings-container">
             <input type="text" id="team-1-name-textbox" value="Team 1">
             <input type="color" class="colorpicker" value="#00ff64">
 
@@ -36,6 +36,20 @@
                 
             </div>
             <input type="checkbox" id="timer-checkbox" checked="true">
+
+            <div class="multiple-items bottom-text">
+                <div>Game to</div>
+                <div>Match to</div>
+            </div>
+            
+            <div class="multiple-items first-column">
+                <input type="number" inputmode="numeric" value="0" min="0" id="game-to">
+                <input type="number" inputmode="numeric" value="0" min="0" id="match-to">
+            </div>
+
+            <input type="checkbox" id="game-match-checkbox">
+
+
 
             <input type="button" value="Reset Points" id="resetbtn" class="first-column">
             
