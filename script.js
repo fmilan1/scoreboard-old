@@ -77,7 +77,8 @@ resetbtn.addEventListener("click", resetpoints);
 let checkwins = false;
 let gamematchcheckbox = document.querySelector("#game-match-checkbox");
 gamematchcheckbox.addEventListener("input", () => {
-    checkwins = gamematchcheckbox.checked
+    checkwins = gamematchcheckbox.checked;
+    save();
 })
 
 let gameto = document.querySelector("#game-to");
