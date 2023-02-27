@@ -87,6 +87,13 @@ let matchto = document.querySelector("#match-to");
 matchto.addEventListener("input", save)
 
 
+let messagebox = document.querySelector(".messagebox");
+let xmark = document.querySelector("#xmark");
+xmark.addEventListener("mousedown", () => {
+    messagebox.classList.toggle("hidden");
+});
+
+
 let timercheckbox = document.querySelector("#timer-checkbox");
 timercheckbox.addEventListener("input", () => {
     toggletimer();
@@ -120,10 +127,6 @@ function togglenames() {
 
 function seconds2HHMMSS(seconds) {
     return new Date(seconds * 1000).toISOString().slice(11, 19);
-}
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function tick() {
@@ -185,14 +188,19 @@ function teamclick(e) {
             target.parentElement.children[1].innerHTML = parseInt(target.parentElement.children[1].innerHTML) + 1;
         }
         if (parseInt(team1subpoint.innerHTML) >= matchto.value) {
-            alert(team1name.innerHTML + " wins!");
+            show_messagebox(team1name.innerHTML);
         }
         else if (parseInt(team2subpoint.innerHTML) >= matchto.value) {
-            alert(team2name.innerHTML + " wins!");
+            show_messagebox(team2name.innerHTML);
         }
     }
 
     save();
+}
+
+function show_messagebox(text) {
+    messagebox.children[1].innerHTML = text + " won!";
+    messagebox.classList.toggle("hidden");
 }
 
 function refresh_teams() {
