@@ -42,7 +42,7 @@ team2subpoint.addEventListener("long-press", () => {team2subpoint.innerHTML = 0;
 team1subpoint.addEventListener("mousedown", teamclick);
 team2subpoint.addEventListener("mousedown", teamclick);
 
-let startx, starty, offset = 5;
+let startx, starty, offset = 20;
 team1point.addEventListener('touchstart', startPos)
 team1point.addEventListener('touchend', endPos)
 
