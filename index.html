@@ -1,80 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
-    <script src="long-press-event.js"></script>
-    <link rel="preload" as="image" href="imgs/pause.svg">
-    <title>Scoreboard</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css">
+	<script src="long-press-event.js"></script>
+	<script src="NoSleep.min.js"></script>
+	<script src="script.js" defer></script>
+	<link rel="preload" as="image" href="imgs/pause.svg">
+	<title>Scoreboard</title>
 </head>
+
 <body>
-    <img src="imgs/fullscreen.svg" id="fullscreen">
-    <img src="imgs/settings.svg" id="settings">
-    <div class="messagebox hidden">
-        <img src="imgs/xmark.svg" id="xmark">
-        <div id="text"></div>
-    </div>
-    <div id="settings-menu" class="hidden">
-        <div class="settings-container">
-            <input type="text" id="team-1-name-textbox" value="Team 1">
-            <input type="color" class="colorpicker" value="#00ff64">
+	<img src="imgs/fullscreen.svg" id="fullscreen">
+	<img src="imgs/settings.svg" id="settings">
+	<div class="messagebox hidden">
+		<img src="imgs/xmark.svg" id="xmark">
+		<div id="text"></div>
+	</div>
+	<div id="settings-menu" class="hidden">
+		<div class="settings-container">
+			<input type="text" id="team-1-name-textbox" value="Team 1">
+			<input type="color" class="colorpicker" value="#00ff64">
 
-            <input type="text" id="team-2-name-textbox" value="Team 2">
-            <input type="color" class="colorpicker" value="#ff0064">
+			<input type="text" id="team-2-name-textbox" value="Team 2">
+			<input type="color" class="colorpicker" value="#ff0064">
 
-            <div>Name labels</div> 
-            <input type="checkbox" id="team-names-checkbox" checked="true">
+			<div>Name labels</div>
+			<input type="checkbox" id="team-names-checkbox" checked="true">
 
-            <div class="multiple-items bottom-text">
-                <div>Hours</div>
-                <div>Mins</div>
-                <div>Secs</div>
-            </div>
-            <div class="multiple-items first-column">
-                <input type="number" inputmode="numeric" id="starttime-hours" value="0" min="0" max="23">
-                <input type="number" inputmode="numeric" id="starttime-mins" value="50" min="0" max="59">
-                <input type="number" inputmode="numeric" id="starttime-secs" value="0" min="0" max="59">
-                
-            </div>
-            <input type="checkbox" id="timer-checkbox" checked="true">
+			<div class="multiple-items bottom-text">
+				<div>Hours</div>
+				<div>Mins</div>
+				<div>Secs</div>
+			</div>
+			<div class="multiple-items first-column">
+				<input type="number" inputmode="numeric" id="starttime-hours" value="0" min="0" max="23">
+				<input type="number" inputmode="numeric" id="starttime-mins" value="50" min="0" max="59">
+				<input type="number" inputmode="numeric" id="starttime-secs" value="0" min="0" max="59">
 
-            <div class="multiple-items bottom-text">
-                <div>Game to</div>
-                <div>Match to</div>
-            </div>
-            
-            <div class="multiple-items first-column">
-                <input type="number" inputmode="numeric" value="0" min="0" id="game-to">
-                <input type="number" inputmode="numeric" value="0" min="0" id="match-to">
-            </div>
+			</div>
+			<input type="checkbox" id="timer-checkbox" checked="true">
 
-            <input type="checkbox" id="game-match-checkbox">
+			<div class="multiple-items bottom-text">
+				<div>Game to</div>
+				<div>Match to</div>
+			</div>
+
+			<div class="multiple-items first-column">
+				<input type="number" inputmode="numeric" value="0" min="0" id="game-to">
+				<input type="number" inputmode="numeric" value="0" min="0" id="match-to">
+			</div>
+
+			<input type="checkbox" id="game-match-checkbox">
+
+			<div>Keep the screen awake</div>
+			<input type="checkbox" id="keepscreenawake">
 
 
+			<input type="button" value="Reset Points" id="resetbtn" class="first-column">
 
-            <input type="button" value="Reset Points" id="resetbtn" class="first-column">
-            
-        </div>
-    </div>
-    <div class="container">
-        <div class="timer-container">
-            <img src="imgs/restart.svg" id="restart">
-            <div id="timer"></div>
-            <img src="imgs/play.svg" id="pauseplay">
-        </div>  
-        <div class="team" id="team-1">
-            <div class="point-text point">0</div>
-            <div class="subpoint-text point">0</div>
-            <div class="name-text"></div>
-        </div>
-        <div class="team" id="team-2">
-            <div class="point-text point">0</div>
-            <div class="subpoint-text point">0</div>
-            <div class="name-text"></div>
-        </div>
-    </div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="timer-container">
+			<img src="imgs/restart.svg" id="restart">
+			<div id="timer"></div>
+			<img src="imgs/play.svg" id="pauseplay">
+		</div>
+		<div class="team" id="team-1">
+			<div class="point-text point">0</div>
+			<div class="subpoint-text point">0</div>
+			<div class="name-text"></div>
+		</div>
+		<div class="team" id="team-2">
+			<div class="point-text point">0</div>
+			<div class="subpoint-text point">0</div>
+			<div class="name-text"></div>
+		</div>
+	</div>
+
 </body>
+
 </html>

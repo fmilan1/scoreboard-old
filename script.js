@@ -6,12 +6,11 @@ let fullscreenbtn = document.querySelector("#fullscreen")
 fullscreenbtn.addEventListener("click", fullscreen)
 let countdown;
 
-
 function fullscreen() {
-    fullscreened = !fullscreened;
-    fullscreenbtn.classList.toggle("fullscreened")
-    if (fullscreened) root.requestFullscreen()
-    else document.exitFullscreen();
+	fullscreened = !fullscreened;
+	fullscreenbtn.classList.toggle("fullscreened")
+	if (fullscreened) root.requestFullscreen()
+	else document.exitFullscreen();
 }
 
 let team1point = document.querySelector("#team-1").children[0];
@@ -27,8 +26,8 @@ let team1nametextbox = document.querySelector("#team-1-name-textbox");
 let team2nametextbox = document.querySelector("#team-2-name-textbox");
 
 
-team1nametextbox.addEventListener("input", () => {refresh_teams();save();})
-team2nametextbox.addEventListener("input", () => {refresh_teams();save();})
+team1nametextbox.addEventListener("input", () => {refresh_teams(); save();})
+team2nametextbox.addEventListener("input", () => {refresh_teams(); save();})
 
 let root = document.documentElement;
 
@@ -49,8 +48,8 @@ let settings_menu = document.querySelector("#settings-menu");
 let team1colorpicker = settings_menu.children[0].children[1];
 let team2colorpicker = settings_menu.children[0].children[3];
 
-team1colorpicker.addEventListener("input", () => {refresh_teams();save();})
-team2colorpicker.addEventListener("input", () => {refresh_teams();save();})
+team1colorpicker.addEventListener("input", () => {refresh_teams(); save();})
+team2colorpicker.addEventListener("input", () => {refresh_teams(); save();})
 
 let pauseplaybtn = document.querySelector("#pauseplay");
 pauseplaybtn.addEventListener("click", pauseplay_timer)
@@ -58,7 +57,7 @@ let restarttimebtn = document.querySelector("#restart");
 restarttimebtn.addEventListener("click", reset);
 
 let teamnamescheckbox = document.querySelector("#team-names-checkbox");
-teamnamescheckbox.addEventListener("input", () => { togglenames(); save(); })
+teamnamescheckbox.addEventListener("input", () => {togglenames(); save();})
 
 let starttimehourstextbox = document.querySelector("#starttime-hours");
 starttimehourstextbox.addEventListener("input", save)
@@ -69,6 +68,12 @@ starttimeminstextbox.addEventListener("input", save)
 let starttimesecstextbox = document.querySelector("#starttime-secs");
 starttimesecstextbox.addEventListener("input", save)
 
+let keepscreenawakecheckbox = document.querySelector("#keepscreenawake");
+
+let noSleep = new NoSleep();
+keepscreenawakecheckbox.addEventListener('input', toggleKeepScreenAwake, false);
+
+
 let resetbtn = document.querySelector("#resetbtn");
 resetbtn.addEventListener("click", resetpoints);
 
@@ -77,8 +82,8 @@ resetbtn.addEventListener("click", resetpoints);
 let checkwins = false;
 let gamematchcheckbox = document.querySelector("#game-match-checkbox");
 gamematchcheckbox.addEventListener("input", () => {
-    checkwins = gamematchcheckbox.checked;
-    save();
+	checkwins = gamematchcheckbox.checked;
+	save();
 })
 
 let gameto = document.querySelector("#game-to");
@@ -90,14 +95,14 @@ matchto.addEventListener("input", save)
 let messagebox = document.querySelector(".messagebox");
 let xmark = document.querySelector("#xmark");
 xmark.addEventListener("mousedown", () => {
-    messagebox.classList.toggle("hidden");
+	messagebox.classList.toggle("hidden");
 });
 
 
 let timercheckbox = document.querySelector("#timer-checkbox");
 timercheckbox.addEventListener("input", () => {
-    toggletimer();
-    save();
+	toggletimer();
+	save();
 })
 
 let timercontainer = document.querySelector(".timer-container");
@@ -114,162 +119,172 @@ let editing = false;
 load()
 refresh_teams()
 
+function toggleKeepScreenAwake() {
+	if (keepscreenawakecheckbox.checked) {
+		noSleep.enable();
+	}
+	else {
+		noSleep.disable();
+	}
+}
+
 function toggletimer() {
-    timercontainer.classList.toggle("hidden");
-    document.querySelector("#team-1").classList.toggle("big");
-    document.querySelector("#team-2").classList.toggle("big");
+	timercontainer.classList.toggle("hidden");
+	document.querySelector("#team-1").classList.toggle("big");
+	document.querySelector("#team-2").classList.toggle("big");
 }
 
 function togglenames() {
-    team1name.classList.toggle("hidden");
-    team2name.classList.toggle("hidden");
+	team1name.classList.toggle("hidden");
+	team2name.classList.toggle("hidden");
 }
 
 function seconds2HHMMSS(seconds) {
-    return new Date(seconds * 1000).toISOString().slice(11, 19);
+	return new Date(seconds * 1000).toISOString().slice(11, 19);
 }
 
 function tick() {
-    time_in_seconds -= 1;
-    timer.innerHTML = seconds2HHMMSS(time_in_seconds);
-    if (time_in_seconds <= 0) {
-        pauseplay_timer()
-    }
+	time_in_seconds -= 1;
+	timer.innerHTML = seconds2HHMMSS(time_in_seconds);
+	if (time_in_seconds <= 0) {
+		pauseplay_timer()
+	}
 }
 
 function resetpoints() {
-    team1point.innerHTML = 0;
-    team2point.innerHTML = 0;
-    team1subpoint.innerHTML = 0;
-    team2subpoint.innerHTML = 0;
-    save();
+	team1point.innerHTML = 0;
+	team2point.innerHTML = 0;
+	team1subpoint.innerHTML = 0;
+	team2subpoint.innerHTML = 0;
+	save();
 }
 
 function pauseplay_timer() {
-    running = !running;
-    if (running && time_in_seconds > 0) {
-        countdown = setInterval(tick, 1000);
-        pauseplaybtn.classList.add("pause");
-    }
-    else {
-        clearInterval(countdown)
-        pauseplaybtn.classList.remove("pause");
-    }
+	running = !running;
+	if (running && time_in_seconds > 0) {
+		countdown = setInterval(tick, 1000);
+		pauseplaybtn.classList.add("pause");
+	}
+	else {
+		clearInterval(countdown)
+		pauseplaybtn.classList.remove("pause");
+	}
 }
 
 function reset() {
-    clearInterval(countdown)
-    pauseplaybtn.classList.remove("pause");
-    running = false;
+	clearInterval(countdown)
+	pauseplaybtn.classList.remove("pause");
+	running = false;
 
-    let secs = parseInt(starttimesecstextbox.value);
-    if (secs % 1 != 0) secs = 0;
+	let secs = parseInt(starttimesecstextbox.value);
+	if (secs % 1 != 0) secs = 0;
 
-    let mins = parseInt(starttimeminstextbox.value);
-    if (mins % 1 != 0) mins = 0;
+	let mins = parseInt(starttimeminstextbox.value);
+	if (mins % 1 != 0) mins = 0;
 
-    let hours = parseInt(starttimehourstextbox.value);
-    if (hours % 1 != 0) hours = 0;
+	let hours = parseInt(starttimehourstextbox.value);
+	if (hours % 1 != 0) hours = 0;
 
-    time_in_seconds = hours * 3600 + mins * 60 + secs;
-    timer.innerHTML = seconds2HHMMSS(time_in_seconds);
+	time_in_seconds = hours * 3600 + mins * 60 + secs;
+	timer.innerHTML = seconds2HHMMSS(time_in_seconds);
 }
 
 function teamclick(e) {
-    let a = 1;
-    if (e.button == 2) a = -1;
-    let target = e.target;
-    target.innerHTML = parseInt(target.innerHTML) + a;
+	let a = 1;
+	if (e.button == 2) a = -1;
+	let target = e.target;
+	target.innerHTML = parseInt(target.innerHTML) + a;
 
-    if (checkwins) {
-        if (parseInt(target.innerHTML) >= gameto.value && !target.classList.contains("subpoint-text")) {
-            team1point.innerHTML = "0";        
-            team2point.innerHTML = "0";        
-            target.parentElement.children[1].innerHTML = parseInt(target.parentElement.children[1].innerHTML) + 1;
-        }
-        if (parseInt(team1subpoint.innerHTML) >= matchto.value) {
-            show_messagebox(team1name.innerHTML);
-        }
-        else if (parseInt(team2subpoint.innerHTML) >= matchto.value) {
-            show_messagebox(team2name.innerHTML);
-        }
-    }
+	if (checkwins) {
+		if (parseInt(target.innerHTML) >= gameto.value && !target.classList.contains("subpoint-text")) {
+			team1point.innerHTML = "0";
+			team2point.innerHTML = "0";
+			target.parentElement.children[1].innerHTML = parseInt(target.parentElement.children[1].innerHTML) + 1;
+		}
+		if (parseInt(team1subpoint.innerHTML) >= matchto.value) {
+			show_messagebox(team1name.innerHTML);
+		}
+		else if (parseInt(team2subpoint.innerHTML) >= matchto.value) {
+			show_messagebox(team2name.innerHTML);
+		}
+	}
 
-    save();
+	save();
 }
 
 function show_messagebox(text) {
-    messagebox.children[1].innerHTML = text + " won!";
-    messagebox.classList.toggle("hidden");
+	messagebox.children[1].innerHTML = text + " won!";
+	messagebox.classList.toggle("hidden");
 }
 
 function refresh_teams() {
-    team1name.innerHTML = team1nametextbox.value;
-    team2name.innerHTML = team2nametextbox.value;
+	team1name.innerHTML = team1nametextbox.value;
+	team2name.innerHTML = team2nametextbox.value;
 
-    root.style.setProperty("--team-1-color", team1colorpicker.value)
-    root.style.setProperty("--team-2-color", team2colorpicker.value)
+	root.style.setProperty("--team-1-color", team1colorpicker.value)
+	root.style.setProperty("--team-2-color", team2colorpicker.value)
 }
 
 function load() {
-    if ("team1name" in localStorage) {
+	if ("team1name" in localStorage) {
 
-        team1nametextbox.value = localStorage.getItem("team1name");
-        team2nametextbox.value = localStorage.getItem("team2name");
-        
-        
-        team1colorpicker.value = localStorage.getItem("team1color");
-        team2colorpicker.value = localStorage.getItem("team2color");
+		team1nametextbox.value = localStorage.getItem("team1name");
+		team2nametextbox.value = localStorage.getItem("team2name");
 
-        team1point.innerHTML = localStorage.getItem("team1point");
-        team2point.innerHTML = localStorage.getItem("team2point");
 
-        team1subpoint.innerHTML = localStorage.getItem("team1subpoint");
-        team2subpoint.innerHTML = localStorage.getItem("team2subpoint");
-        
-        starttimehourstextbox.value = localStorage.getItem("starttimehours");
-        starttimeminstextbox.value = localStorage.getItem("starttimemins");
-        starttimesecstextbox.value = localStorage.getItem("starttimesecs");
-        reset();
-        
-        teamnamescheckbox.checked = localStorage.getItem("teamnames") == "true" ? true : false;
-        if (!teamnamescheckbox.checked) togglenames();
+		team1colorpicker.value = localStorage.getItem("team1color");
+		team2colorpicker.value = localStorage.getItem("team2color");
 
-        timercheckbox.checked = localStorage.getItem("timer") == "true" ? true : false;
-        if (!timercheckbox.checked) toggletimer();
+		team1point.innerHTML = localStorage.getItem("team1point");
+		team2point.innerHTML = localStorage.getItem("team2point");
 
-        gamematchcheckbox.checked = localStorage.getItem("gamematch") == "true" ? true : false;
-        checkwins = gamematchcheckbox.checked;
+		team1subpoint.innerHTML = localStorage.getItem("team1subpoint");
+		team2subpoint.innerHTML = localStorage.getItem("team2subpoint");
 
-        gameto.value = localStorage.getItem("gameto")
-        matchto.value = localStorage.getItem("matchto")
-    }
-    timer.innerHTML = seconds2HHMMSS(time_in_seconds);
+		starttimehourstextbox.value = localStorage.getItem("starttimehours");
+		starttimeminstextbox.value = localStorage.getItem("starttimemins");
+		starttimesecstextbox.value = localStorage.getItem("starttimesecs");
+		reset();
+
+		teamnamescheckbox.checked = localStorage.getItem("teamnames") == "true" ? true : false;
+		if (!teamnamescheckbox.checked) togglenames();
+
+		timercheckbox.checked = localStorage.getItem("timer") == "true" ? true : false;
+		if (!timercheckbox.checked) toggletimer();
+
+		gamematchcheckbox.checked = localStorage.getItem("gamematch") == "true" ? true : false;
+		checkwins = gamematchcheckbox.checked;
+
+		gameto.value = localStorage.getItem("gameto")
+		matchto.value = localStorage.getItem("matchto")
+
+	}
+	timer.innerHTML = seconds2HHMMSS(time_in_seconds);
 
 }
 
 function save() {
-    localStorage.setItem("team1point", team1point.innerHTML)
-    localStorage.setItem("team2point", team2point.innerHTML)
-    localStorage.setItem("team1color", team1colorpicker.value)
-    localStorage.setItem("team2color", team2colorpicker.value)
-    localStorage.setItem("team1name", team1nametextbox.value)
-    localStorage.setItem("team2name", team2nametextbox.value)
-    localStorage.setItem("team1color", team1colorpicker.value)
-    localStorage.setItem("team2color", team2colorpicker.value)
-    localStorage.setItem("starttimehours", starttimehourstextbox.value)
-    localStorage.setItem("starttimemins", starttimeminstextbox.value)
-    localStorage.setItem("starttimesecs", starttimesecstextbox.value)
-    localStorage.setItem("team1subpoint", team1subpoint.innerHTML)
-    localStorage.setItem("team2subpoint", team2subpoint.innerHTML)
-    localStorage.setItem("teamnames", teamnamescheckbox.checked)
-    localStorage.setItem("timer", timercheckbox.checked)
-    localStorage.setItem("gamematch", gamematchcheckbox.checked)
-    localStorage.setItem("gameto", gameto.value)
-    localStorage.setItem("matchto", matchto.value)
+	localStorage.setItem("team1point", team1point.innerHTML)
+	localStorage.setItem("team2point", team2point.innerHTML)
+	localStorage.setItem("team1color", team1colorpicker.value)
+	localStorage.setItem("team2color", team2colorpicker.value)
+	localStorage.setItem("team1name", team1nametextbox.value)
+	localStorage.setItem("team2name", team2nametextbox.value)
+	localStorage.setItem("team1color", team1colorpicker.value)
+	localStorage.setItem("team2color", team2colorpicker.value)
+	localStorage.setItem("starttimehours", starttimehourstextbox.value)
+	localStorage.setItem("starttimemins", starttimeminstextbox.value)
+	localStorage.setItem("starttimesecs", starttimesecstextbox.value)
+	localStorage.setItem("team1subpoint", team1subpoint.innerHTML)
+	localStorage.setItem("team2subpoint", team2subpoint.innerHTML)
+	localStorage.setItem("teamnames", teamnamescheckbox.checked)
+	localStorage.setItem("timer", timercheckbox.checked)
+	localStorage.setItem("gamematch", gamematchcheckbox.checked)
+	localStorage.setItem("gameto", gameto.value)
+	localStorage.setItem("matchto", matchto.value)
 }
 
 function settingsclick() {
-    settings.classList.toggle("rotate")
-    settings_menu.classList.toggle("hidden");
+	settings.classList.toggle("rotate")
+	settings_menu.classList.toggle("hidden");
 }
