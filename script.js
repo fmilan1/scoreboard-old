@@ -42,6 +42,33 @@ team2subpoint.addEventListener("long-press", () => {team2subpoint.innerHTML = 0;
 team1subpoint.addEventListener("mousedown", teamclick);
 team2subpoint.addEventListener("mousedown", teamclick);
 
+let startx, starty, offset = 100;
+team1point.addEventListener('touchstart', startPos)
+team1point.addEventListener('touchend', endPos)
+
+team2point.addEventListener('touchstart', startPos)
+team2point.addEventListener('touchend', endPos)
+
+team1subpoint.addEventListener('touchend', endPos)
+team1subpoint.addEventListener('touchstart', startPos)
+
+team2subpoint.addEventListener('touchend', endPos)
+team2subpoint.addEventListener('touchstart', startPos)
+function startPos(e) {
+	startx = e.touches[0].clientX;
+	starty = e.touches[0].clientY;
+}
+
+function endPos(e) {
+	let deltaX;
+	let deltaY;
+	deltaX = e.changedTouches[0].clientX - startx;
+	deltaY = e.changedTouches[0].clientY - starty;
+	if (deltaX < offset && deltaY > offset) {
+		e.target.innerHTML = parseInt(e.target.innerHTML) - 1;
+	}
+}
+
 let settings = document.querySelector("#settings");
 let settings_menu = document.querySelector("#settings-menu");
 
