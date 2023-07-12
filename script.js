@@ -72,6 +72,9 @@ function endPos(e) {
 let settings = document.querySelector("#settings");
 let settings_menu = document.querySelector("#settings-menu");
 
+let swap = document.querySelector('#swap');
+swap.addEventListener('click', swap_sides);
+
 let team1colorpicker = settings_menu.children[0].children[1];
 let team2colorpicker = settings_menu.children[0].children[3];
 
@@ -96,6 +99,11 @@ let starttimesecstextbox = document.querySelector("#starttime-secs");
 starttimesecstextbox.addEventListener("input", save)
 
 let keepscreenawakecheckbox = document.querySelector("#keepscreenawake");
+
+let menucontainer = document.querySelector('.menucontainer');
+
+let menu_arrow = document.querySelector('#menu-arrow');
+menu_arrow.addEventListener('click', open_menu)
 
 let noSleep = new NoSleep();
 keepscreenawakecheckbox.addEventListener('input', toggleKeepScreenAwake, false);
@@ -153,6 +161,30 @@ function toggleKeepScreenAwake() {
 	else {
 		noSleep.disable();
 	}
+}
+
+function open_menu() {
+	menucontainer.classList.toggle('openmenu');
+	menu_arrow.classList.toggle('rotate');
+}
+
+function swap_sides() {
+	let tmp_team1point = team1point.innerHTML;
+	let tmp_team1subpoint = team1subpoint.innerHTML;
+	let tmp_team1name = team1nametextbox.value;
+	let tmp_team1color = team1colorpicker.value;
+
+	team1point.innerHTML = team2point.innerHTML;
+	team1subpoint.innerHTML = team2subpoint.innerHTML;
+	team1nametextbox.value = team2nametextbox.value;
+	team1colorpicker.value = team2colorpicker.value;
+
+	team2point.innerHTML = tmp_team1point;
+	team2subpoint.innerHTML = tmp_team1subpoint;
+	team2nametextbox.value = tmp_team1name;
+	team2colorpicker.value = tmp_team1color;
+	refresh_teams();
+	save();
 }
 
 function toggletimer() {

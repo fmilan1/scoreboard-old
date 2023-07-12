@@ -13,13 +13,34 @@ body {
     overflow: hidden;
 }
 
-#settings {
-    width: 35px;
+.menucontainer {
+    background-color: white;
+    /* width: 50px; */
+    padding: 10px;
+    border: 10px solid black;
+    border-bottom: none;
+    border-radius: 25px 25px 0 0;
+    height: max-content;
     position: absolute;
-    bottom: 10px;
-    transition: 0.2s;
-    cursor: pointer;
-    z-index: 100;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    bottom: 0;
+    transform: translateY(calc((var(--children) - 1) * 35px));
+    transition: transform 0.4s;
+}
+
+.menucontainer.openmenu {
+    transform: translateY(0);
+}
+
+#menu-arrow {
+    transform: rotate(180deg);
+}
+
+#menu-arrow.rotate {
+    rotate: 180deg;
 }
 
 #fullscreen {
@@ -102,7 +123,7 @@ input[type="checkbox"], .colorpicker {
 }
 
 #settings-menu.hidden {
-    display: block;
+    display: hidden;
     transform: translateY(120%);
 }
 
@@ -275,3 +296,4 @@ img {
     top: 5px;
     right: 10px;
 }
+

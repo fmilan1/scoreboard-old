@@ -15,7 +15,13 @@
 
 <body>
 	<img src="imgs/fullscreen.svg" id="fullscreen">
-	<img src="imgs/settings.svg" id="settings">
+	
+	<div class="menucontainer" style="--children: 3">
+
+		<img src="imgs/up-arrow.svg" id="menu-arrow">
+		<img src="imgs/swap.svg" id="swap">
+		<img src="imgs/settings.svg" id="settings">
+	</div>
 	<div class="messagebox hidden">
 		<img src="imgs/xmark.svg" id="xmark">
 		<div id="text"></div>
@@ -56,7 +62,7 @@
 
 			<input type="checkbox" id="game-match-checkbox">
 
-			<div>Keep the screen awake</div>
+			<div>Keep the screen on</div>
 			<input type="checkbox" id="keepscreenawake">
 
 
