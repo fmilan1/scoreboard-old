@@ -6,14 +6,18 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="style.css">
+	<script src="/src/settings.js"></script>
+	<script src="pubnub.js"></script>
 	<script src="long-press-event.js"></script>
 	<script src="NoSleep.min.js"></script>
 	<script src="script.js" defer></script>
+	<script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.3.1.min.js"></script>
 	<link rel="preload" as="image" href="imgs/pause.svg">
 	<title>Scoreboard</title>
 </head>
 
 <body>
+
 	<img src="imgs/fullscreen.svg" id="fullscreen">
 	
 	<div class="menucontainer" style="--children: 3">
@@ -64,6 +68,12 @@
 
 			<div>Keep the screen on</div>
 			<input type="checkbox" id="keepscreenawake">
+
+			
+			<div class="bottom-text">Remote Connections:</div>
+			<a id="remote-id" class="first-column" href="" target="_blank"></a>
+			<div class="qrcode"></div>
+
 
 
 			<input type="button" value="Reset Points" id="resetbtn" class="first-column">

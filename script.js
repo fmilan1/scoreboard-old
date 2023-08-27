@@ -31,8 +31,11 @@ team2nametextbox.addEventListener("input", () => {refresh_teams(); save();})
 
 let root = document.documentElement;
 
+
+
 team1point.addEventListener("mousedown", teamclick);
 team2point.addEventListener("mousedown", teamclick);
+
 
 team1point.addEventListener("long-press", () => {team1point.innerHTML = 0; save()})
 team2point.addEventListener("long-press", () => {team2point.innerHTML = 0; save()})
@@ -68,6 +71,20 @@ function endPos(e) {
 		e.target.innerHTML = parseInt(e.target.innerHTML) - 1;
 	}
 }
+
+let remoteid = document.querySelector('#remote-id');
+const id = Math.floor(Math.random() * 10000)
+remoteid.innerHTML = "https://" + window.location.host + "/remote/?id=" + id
+remoteid.setAttribute("href", "/remote/?id=" + id)
+
+
+
+
+
+
+
+
+
 
 let settings = document.querySelector("#settings");
 let settings_menu = document.querySelector("#settings-menu");
