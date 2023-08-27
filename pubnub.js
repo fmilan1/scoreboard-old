@@ -3,6 +3,8 @@ const showMessage = (msg) => {
     let target = eval(msg.target)
     let e = msg.event
     e.target = target
+    let value = msg.value
+    if (value == -1) e.button = 2
     teamclick(e)
 };
 

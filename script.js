@@ -77,6 +77,12 @@ const id = Math.floor(Math.random() * 10000)
 remoteid.innerHTML = "https://" + window.location.host + "/remote/?id=" + id
 remoteid.setAttribute("href", "/remote/?id=" + id)
 
+new QRCode("qrcode", {
+    text: remoteid.innerHTML,
+    colorDark : "#000",
+    colorLight : "#fff",
+    correctLevel : QRCode.CorrectLevel.H
+});
 
 
 
