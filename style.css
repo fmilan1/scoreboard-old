@@ -344,7 +344,7 @@ body.remotecontrol {
     margin-bottom: 100px;
 }
 
-.point {
+.remotecontrol .point {
     width: 35vw;
     max-height: 150px;
     height: 20vw;
