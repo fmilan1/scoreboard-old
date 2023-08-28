@@ -1,5 +1,7 @@
 document.addEventListener('contextmenu', event => event.preventDefault());
 
+const id = Math.floor(Math.random() * 10000)
+console.log(id)
 
 let fullscreened = false;
 let fullscreenbtn = document.querySelector("#fullscreen")
@@ -12,6 +14,8 @@ function fullscreen() {
 	if (fullscreened) root.requestFullscreen()
 	else document.exitFullscreen();
 }
+
+
 
 let team1point = document.querySelector("#team-1").children[0];
 let team2point = document.querySelector("#team-2").children[0];
@@ -73,7 +77,7 @@ function endPos(e) {
 }
 
 let remoteid = document.querySelector('#remote-id');
-const id = Math.floor(Math.random() * 10000)
+
 remoteid.innerHTML = "https://" + window.location.host + "/remote/?id=" + id
 remoteid.setAttribute("href", "/remote/?id=" + id)
 

@@ -322,11 +322,16 @@ body.remotecontrol {
     width: 100%;
 }
 
+.connectionstate {
+    margin-block: 50px;
+    text-align: center;
+    font-size: 2rem;
+}
+
 .remotecontrol > .remotecontainer {
     max-width: 850px;
     padding: 1rem;
     border-radius: 30px;
-    border: 1px solid grey;
     background-color: whitesmoke;
     box-shadow: 0px 0px 30px 0px;
     
@@ -338,10 +343,6 @@ body.remotecontrol {
     height: 50%;
     align-items: center;
     font-size: clamp(16px, 10vw, 75px);
-}
-
-.team1 {
-    margin-bottom: 100px;
 }
 
 .remotecontrol .point {
@@ -372,7 +373,7 @@ body.remotecontrol {
     }
 }
 
-.btn, .point {
+.btn, .remotecontrol .point {
     border-radius: 15px;
 }
 

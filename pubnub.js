@@ -1,61 +1,87 @@
 
 const showMessage = (msg) => {
-    let target = eval(msg.target)
-    let e = msg.event
-    e.target = target
-    let value = msg.value
-    if (value == -1) e.button = 2
-    teamclick(e)
+    if (msg.sender != pubnub.getUUID()) {
+        if (msg.type == 'add') {
+
+            let target = eval(msg.message.target)
+            let e = msg.message.event
+            e.target = target
+            let value = msg.message.value
+            if (value == '-') e.button = 2
+            teamclick(e)
+        }
+        else if (msg.type == 'sync') {
+            console.log(msg)
+            eval(msg.message.target).innerHTML = msg.message.value
+        }
+    }
 };
 
-let pubnub;
 
+const pubnub = new PubNub({
+    publishKey : PUBNUB_PUB_KEY,
+    subscribeKey : PUBNUB_SUB_KEY,
+    uuid: PubNub.generateUUID(),
+    ssl: true
+});
 
-const setupPubNub = () => {
-    // Update this block with your publish/subscribe keys
-    pubnub = new PubNub({
-        publishKey : PUBNUB_PUB_KEY,
-        subscribeKey : PUBNUB_SUB_KEY,
-        userId: "myUniqueUserId"
-    });
+// Feliratkozás a csatornára jelenléti információval
+pubnub.subscribe({
+channels: [id],
+withPresence: true
+});
 
-    // add listener
-    const listener = {
-        status: (statusEvent) => {
-            if (statusEvent.category === "PNConnectedCategory") {
-                console.log("Connected");
-            }
-        },
-        message: (messageEvent) => {
-            showMessage(messageEvent.message.description);
-        },
-        presence: (presenceEvent) => {
-            // handle presence
+// Eseménykezelő az "presence" események figyelésére
+pubnub.addListener({
+    presence: function (event) {
+        if (event.action === 'join') {
+        console.log(event.uuid + ' csatlakozott a csatornához.');
+        if (event.occupancy >= 2) {
+            try {
+                sendMessage({
+                    target: 'remoteteam1point',
+                    value: team1point.innerHTML
+                }, 'sync');
+                sendMessage({
+                    target: 'remoteteam1subpoint',
+                    value: team1subpoint.innerHTML
+                }, 'sync');
+                sendMessage({
+                    target: 'remoteteam2point',
+                    value: team2point.innerHTML
+                }, 'sync');
+                sendMessage({
+                    target: 'remoteteam2subpoint',
+                    value: team2subpoint.innerHTML
+                }, 'sync');
+            } catch(e) {}
+            try {    
+                connectionstate.innerHTML = "Connected"
+            } catch(e) {}
         }
-    };
-    pubnub.addListener(listener);
-
-    // subscribe to a channel
-    pubnub.subscribe({
-        channels: [id]
-    });
-};
-
-// run after page is loaded
-window.onload = setupPubNub;
-
-
-// publish message
-const publishMessage = async (message) => {
-    // With the right payload, you can publish a message, add a reaction to a message,
-    // send a push notification, or send a small payload called a signal.
-    const publishPayload = {
-        channel : id,
-        message: {
-            title: "greeting",
-            description: message
+    } else if (event.action === 'leave') {
+        try {
+            connectionstate.innerHTML = "Disconnected"
+        } catch(e) {}
+            console.log(event.uuid + ' kilépett a csatornából.');
         }
-    };
-    await pubnub.publish(publishPayload);
+    },
+    message: function (event) {
+        if (event.message.sender != pubnub.getUUID()) {
+            showMessage(event.message)
+        }
+    }
+});
+
+// Üzenet küldése a csatornán keresztül
+function sendMessage(msg, state) {
+
+pubnub.publish({
+    channel: id,
+    message: {
+        type: state,
+        message: msg,
+        sender: pubnub.getUUID()
+    }
+});
 }
-

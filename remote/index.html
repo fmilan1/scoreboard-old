@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="/src/settings.js"></script>
-    <script src="../pubnub.js"></script>
-    <script src="remote.js" defer></script>
     <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.3.1.min.js"></script>
+    <script src="/src/settings.js"></script>
+    <script src="remote.js" defer></script>
+    <script src="../pubnub.js" defer></script>
+    <!-- <script src="../script.js" defer></script> -->
     <link rel="stylesheet" href="../style.css">
     <title>Remote Controller</title>
 </head>
@@ -15,28 +16,28 @@
         <div class="team1">
             <div class="team1name name">Team 1</div>
             <div class="flexcontainer">
-                <div class="btn team1point">-1</div>
+                <div class="btn team1point">-</div>
                 <div class="point point1">0</div>
-                <div class="btn team1point">+1</div>
+                <div class="btn team1point">+</div>
             </div>
             <div class="flexcontainer">
-                <div class="btn team1subpoint">-1</div>
+                <div class="btn team1subpoint">-</div>
                 <div class="point subpoint1">0</div>
-                <div class="btn team1subpoint">+1</div>
+                <div class="btn team1subpoint">+</div>
             </div>
         </div>
-        
+        <div class="connectionstate">Disconnected</div>
         <div class="team2">
             <div class="team2name name">Team 2</div>
             <div class="flexcontainer">
-                <div class="btn team2point">-1</div>
+                <div class="btn team2point">-</div>
                 <div class="point point2">0</div>
-                <div class="btn team2point">+1</div>
+                <div class="btn team2point">+</div>
             </div>
             <div class="flexcontainer">
-                <div class="btn team2subpoint">-1</div>
+                <div class="btn team2subpoint">-</div>
                 <div class="point subpoint2">0</div>
-                <div class="btn team2subpoint">+1</div>
+                <div class="btn team2subpoint">+</div>
             </div>
         </div>
     </div>
