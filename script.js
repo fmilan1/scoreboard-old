@@ -15,8 +15,6 @@ function fullscreen() {
 	else document.exitFullscreen();
 }
 
-
-
 let team1point = document.querySelector("#team-1").children[0];
 let team2point = document.querySelector("#team-2").children[0];
 
@@ -34,8 +32,6 @@ team1nametextbox.addEventListener("input", () => {refresh_teams(); save();})
 team2nametextbox.addEventListener("input", () => {refresh_teams(); save();})
 
 let root = document.documentElement;
-
-
 
 team1point.addEventListener("mousedown", teamclick);
 team2point.addEventListener("mousedown", teamclick);
@@ -89,13 +85,6 @@ new QRCode("qrcode", {
 });
 
 
-
-
-
-
-
-
-
 let settings = document.querySelector("#settings");
 let settings_menu = document.querySelector("#settings-menu");
 
@@ -144,20 +133,6 @@ keepscreenawakecheckbox.addEventListener('input', toggleKeepScreenAwake, false);
 
 let resetbtn = document.querySelector("#resetbtn");
 resetbtn.addEventListener("click", resetpoints);
-
-
-
-// let checkwins = false;
-// let gamematchcheckbox = document.querySelector("#game-match-checkbox");
-// gamematchcheckbox.addEventListener("input", () => {
-// 	checkwins = gamematchcheckbox.checked;
-// 	save();
-// })
-
-// let gameto = document.querySelector("#game-to");
-// gameto.addEventListener("input", save)
-// let matchto = document.querySelector("#match-to");
-// matchto.addEventListener("input", save)
 
 
 let messagebox = document.querySelector(".messagebox");
@@ -292,20 +267,6 @@ function teamclick(e) {
 	let target = e.target;
 	target.innerHTML = parseInt(target.innerHTML) + a;
 
-	if (checkwins) {
-		if (parseInt(target.innerHTML) >= gameto.value && !target.classList.contains("subpoint-text")) {
-			team1point.innerHTML = "0";
-			team2point.innerHTML = "0";
-			target.parentElement.children[1].innerHTML = parseInt(target.parentElement.children[1].innerHTML) + 1;
-		}
-		if (parseInt(team1subpoint.innerHTML) >= matchto.value) {
-			show_messagebox(team1name.innerHTML);
-		}
-		else if (parseInt(team2subpoint.innerHTML) >= matchto.value) {
-			show_messagebox(team2name.innerHTML);
-		}
-	}
-
 	save();
 }
 
@@ -349,12 +310,6 @@ function load() {
 		timercheckbox.checked = localStorage.getItem("timer") == "true" ? true : false;
 		if (!timercheckbox.checked) toggletimer();
 		
-		// gamematchcheckbox.checked = localStorage.getItem("gamematch") == "true" ? true : false;
-		// checkwins = gamematchcheckbox.checked;
-		
-		// gameto.value = localStorage.getItem("gameto")
-		// matchto.value = localStorage.getItem("matchto")
-		
 		secondarypointscheckbox.checked = localStorage.getItem("secondary") == "true" ? true : false;
 		if (!secondarypointscheckbox.checked) toggleSecondaryPoints();
 
@@ -379,9 +334,6 @@ function save() {
 	localStorage.setItem("team2subpoint", team2subpoint.innerHTML)
 	localStorage.setItem("teamnames", teamnamescheckbox.checked)
 	localStorage.setItem("timer", timercheckbox.checked)
-	// localStorage.setItem("gamematch", gamematchcheckbox.checked)
-	// localStorage.setItem("gameto", gameto.value)
-	// localStorage.setItem("matchto", matchto.value)
 	localStorage.setItem("secondary", secondarypointscheckbox.checked)
 }
 

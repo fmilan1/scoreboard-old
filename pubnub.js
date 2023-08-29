@@ -11,7 +11,6 @@ const showMessage = (msg) => {
             teamclick(e)
         }
         else if (msg.type == 'sync') {
-            console.log(msg)
             eval(msg.message.target).innerHTML = msg.message.value
         }
     }
