@@ -105,14 +105,8 @@ restarttimebtn.addEventListener("click", reset);
 let teamnamescheckbox = document.querySelector("#team-names-checkbox");
 teamnamescheckbox.addEventListener("input", () => {togglenames(); save();})
 
-let starttimehourstextbox = document.querySelector("#starttime-hours");
-starttimehourstextbox.addEventListener("input", save)
-
 let starttimeminstextbox = document.querySelector("#starttime-mins");
 starttimeminstextbox.addEventListener("input", save)
-
-let starttimesecstextbox = document.querySelector("#starttime-secs");
-starttimesecstextbox.addEventListener("input", save)
 
 let secondarypointscheckbox = document.querySelector('#secondary-points-checkbox');
 secondarypointscheckbox.addEventListener('input', () => {
@@ -211,13 +205,18 @@ function togglenames() {
 	team2name.classList.toggle("hidden");
 }
 
-function seconds2HHMMSS(seconds) {
-	return new Date(seconds * 1000).toISOString().slice(11, 19);
+function seconds2MMSS(seconds) {
+	min = Math.floor(seconds / 60)
+	sec = (seconds - min * 60)
+	if (sec < 10) {
+		sec = '0' + sec
+	}
+	return min + ':' + sec
 }
 
 function tick() {
 	time_in_seconds -= 1;
-	timer.innerHTML = seconds2HHMMSS(time_in_seconds);
+	timer.innerHTML = seconds2MMSS(time_in_seconds);
 	if (time_in_seconds <= 0) {
 		pauseplay_timer()
 	}
@@ -248,17 +247,11 @@ function reset() {
 	pauseplaybtn.classList.remove("pause");
 	running = false;
 
-	let secs = parseInt(starttimesecstextbox.value);
-	if (secs % 1 != 0) secs = 0;
-
 	let mins = parseInt(starttimeminstextbox.value);
 	if (mins % 1 != 0) mins = 0;
 
-	let hours = parseInt(starttimehourstextbox.value);
-	if (hours % 1 != 0) hours = 0;
-
-	time_in_seconds = hours * 3600 + mins * 60 + secs;
-	timer.innerHTML = seconds2HHMMSS(time_in_seconds);
+	time_in_seconds = mins * 60;
+	timer.innerHTML = seconds2MMSS(time_in_seconds);
 }
 
 function teamclick(e) {
@@ -299,9 +292,7 @@ function load() {
 		team1subpoint.innerHTML = localStorage.getItem("team1subpoint");
 		team2subpoint.innerHTML = localStorage.getItem("team2subpoint");
 
-		starttimehourstextbox.value = localStorage.getItem("starttimehours");
 		starttimeminstextbox.value = localStorage.getItem("starttimemins");
-		starttimesecstextbox.value = localStorage.getItem("starttimesecs");
 		reset();
 
 		teamnamescheckbox.checked = localStorage.getItem("teamnames") == "true" ? true : false;
@@ -314,7 +305,7 @@ function load() {
 		if (!secondarypointscheckbox.checked) toggleSecondaryPoints();
 
 	}
-	timer.innerHTML = seconds2HHMMSS(time_in_seconds);
+	timer.innerHTML = seconds2MMSS(time_in_seconds);
 
 }
 
@@ -327,9 +318,7 @@ function save() {
 	localStorage.setItem("team2name", team2nametextbox.value)
 	localStorage.setItem("team1color", team1colorpicker.value)
 	localStorage.setItem("team2color", team2colorpicker.value)
-	localStorage.setItem("starttimehours", starttimehourstextbox.value)
 	localStorage.setItem("starttimemins", starttimeminstextbox.value)
-	localStorage.setItem("starttimesecs", starttimesecstextbox.value)
 	localStorage.setItem("team1subpoint", team1subpoint.innerHTML)
 	localStorage.setItem("team2subpoint", team2subpoint.innerHTML)
 	localStorage.setItem("teamnames", teamnamescheckbox.checked)
