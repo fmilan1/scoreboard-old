@@ -125,6 +125,12 @@ starttimeminstextbox.addEventListener("input", save)
 let starttimesecstextbox = document.querySelector("#starttime-secs");
 starttimesecstextbox.addEventListener("input", save)
 
+let secondarypointscheckbox = document.querySelector('#secondary-points-checkbox');
+secondarypointscheckbox.addEventListener('input', () => {
+	toggleSecondaryPoints();
+	save();
+})
+
 let keepscreenawakecheckbox = document.querySelector("#keepscreenawake");
 
 let menucontainer = document.querySelector('.menucontainer');
@@ -141,17 +147,17 @@ resetbtn.addEventListener("click", resetpoints);
 
 
 
-let checkwins = false;
-let gamematchcheckbox = document.querySelector("#game-match-checkbox");
-gamematchcheckbox.addEventListener("input", () => {
-	checkwins = gamematchcheckbox.checked;
-	save();
-})
+// let checkwins = false;
+// let gamematchcheckbox = document.querySelector("#game-match-checkbox");
+// gamematchcheckbox.addEventListener("input", () => {
+// 	checkwins = gamematchcheckbox.checked;
+// 	save();
+// })
 
-let gameto = document.querySelector("#game-to");
-gameto.addEventListener("input", save)
-let matchto = document.querySelector("#match-to");
-matchto.addEventListener("input", save)
+// let gameto = document.querySelector("#game-to");
+// gameto.addEventListener("input", save)
+// let matchto = document.querySelector("#match-to");
+// matchto.addEventListener("input", save)
 
 
 let messagebox = document.querySelector(".messagebox");
@@ -188,6 +194,11 @@ function toggleKeepScreenAwake() {
 	else {
 		noSleep.disable();
 	}
+}
+
+function toggleSecondaryPoints() {
+	team1subpoint.classList.toggle('hidden');
+	team2subpoint.classList.toggle('hidden');
 }
 
 function open_menu() {
@@ -337,12 +348,15 @@ function load() {
 
 		timercheckbox.checked = localStorage.getItem("timer") == "true" ? true : false;
 		if (!timercheckbox.checked) toggletimer();
-
-		gamematchcheckbox.checked = localStorage.getItem("gamematch") == "true" ? true : false;
-		checkwins = gamematchcheckbox.checked;
-
-		gameto.value = localStorage.getItem("gameto")
-		matchto.value = localStorage.getItem("matchto")
+		
+		// gamematchcheckbox.checked = localStorage.getItem("gamematch") == "true" ? true : false;
+		// checkwins = gamematchcheckbox.checked;
+		
+		// gameto.value = localStorage.getItem("gameto")
+		// matchto.value = localStorage.getItem("matchto")
+		
+		secondarypointscheckbox.checked = localStorage.getItem("secondary") == "true" ? true : false;
+		if (!secondarypointscheckbox.checked) toggleSecondaryPoints();
 
 	}
 	timer.innerHTML = seconds2HHMMSS(time_in_seconds);
@@ -365,9 +379,10 @@ function save() {
 	localStorage.setItem("team2subpoint", team2subpoint.innerHTML)
 	localStorage.setItem("teamnames", teamnamescheckbox.checked)
 	localStorage.setItem("timer", timercheckbox.checked)
-	localStorage.setItem("gamematch", gamematchcheckbox.checked)
-	localStorage.setItem("gameto", gameto.value)
-	localStorage.setItem("matchto", matchto.value)
+	// localStorage.setItem("gamematch", gamematchcheckbox.checked)
+	// localStorage.setItem("gameto", gameto.value)
+	// localStorage.setItem("matchto", matchto.value)
+	localStorage.setItem("secondary", secondarypointscheckbox.checked)
 }
 
 function settingsclick() {
