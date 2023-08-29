@@ -382,7 +382,36 @@ body.remotecontrol {
     border-radius: 15px;
 }
 
+.namecontainer {
+    display: flex;
+    height: clamp(16px, 10vw, 50px);
+    
+}
+
 .name {
+    font-size: clamp(1rem, 10vw, 3rem);
     text-align: center;
+    cursor: text;
+    width: 100%;
+}
+
+.name.textbox {
+    box-shadow: 0 0 0 1px;
+    width: 90%;
     font-size: 2rem;
+    text-align: start;
+    display: grid;
+    align-items: center;
+    padding-inline: 2px;
+    margin-right: 10px;
+}
+
+.apply {
+    aspect-ratio: 1 / 1;
+    max-width: 50px;
+
+}
+
+.apply.hidden {
+    transition: 0s;
 }

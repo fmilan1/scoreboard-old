@@ -11,7 +11,10 @@ const showMessage = (msg) => {
             teamclick(e)
         }
         else if (msg.type == 'sync') {
-            eval(msg.message.target).innerHTML = msg.message.value
+            let target = eval(msg.message.target)
+            eval(target).innerHTML = msg.message.value
+            eval(target).value = msg.message.value
+            target.dispatchEvent(new Event('input'))
         }
     }
 };
@@ -38,6 +41,10 @@ pubnub.addListener({
         if (event.occupancy >= 2) {
             try {
                 sendMessage({
+                    target: 'remoteteam1nametext',
+                    value: team1name.innerHTML
+                }, 'sync');
+                sendMessage({
                     target: 'remoteteam1point',
                     value: team1point.innerHTML
                 }, 'sync');
@@ -52,6 +59,10 @@ pubnub.addListener({
                 sendMessage({
                     target: 'remoteteam2subpoint',
                     value: team2subpoint.innerHTML
+                }, 'sync');
+                sendMessage({
+                    target: 'remoteteam2nametext',
+                    value: team2name.innerHTML
                 }, 'sync');
             } catch(e) {}
             try {    

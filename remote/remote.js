@@ -57,3 +57,63 @@ team2subpointButtons.forEach(btn => {
         remoteteam2subpoint.innerHTML = eval(remoteteam2subpoint.innerHTML + btn.innerHTML + 1)
     });
 });
+
+
+
+
+
+
+
+
+
+const remoteteam1nametext = document.querySelector('.team1name.name.text');
+const remoteteam1applybtn= document.querySelector('.team1.apply');
+
+const remoteteam2nametext = document.querySelector('.team2name.name.text');
+const remoteteam2applybtn= document.querySelector('.team2.apply');
+
+remoteteam1nametext.addEventListener('keydown', (e) => {
+    if (e.keyCode === 13) {
+        e.preventDefault();
+        remoteteam1applybtn.dispatchEvent(new Event('click'));
+        remoteteam1nametext.blur()
+    }
+});
+
+remoteteam1nametext.addEventListener('mousedown', () => {
+    remoteteam1nametext.classList.add('textbox');
+    remoteteam1applybtn.classList.remove('hidden');
+});
+
+remoteteam1applybtn.addEventListener('click', () => {
+    remoteteam1nametext.classList.remove('textbox');
+    remoteteam1applybtn.classList.add('hidden');
+    sendMessage({
+        target: 'team1nametextbox',
+        value: remoteteam1nametext.innerHTML
+    }, 'sync');
+});
+
+
+
+remoteteam2nametext.addEventListener('keydown', (e) => {
+    if (e.keyCode === 13) {
+        e.preventDefault();
+        remoteteam2applybtn.dispatchEvent(new Event('click'));
+        remoteteam2nametext.blur()
+    }
+});
+
+remoteteam2nametext.addEventListener('mousedown', () => {
+    remoteteam2nametext.classList.add('textbox');
+    remoteteam2applybtn.classList.remove('hidden');
+});
+
+remoteteam2applybtn.addEventListener('click', () => {
+    remoteteam2nametext.classList.remove('textbox');
+    remoteteam2applybtn.classList.add('hidden');
+    sendMessage({
+        target: 'team2nametextbox',
+        value: remoteteam2nametext.innerHTML
+    }, 'sync');
+});
