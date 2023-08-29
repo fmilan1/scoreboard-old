@@ -26,8 +26,8 @@ const pubnub = new PubNub({
 
 // Feliratkozás a csatornára jelenléti információval
 pubnub.subscribe({
-channels: [id],
-withPresence: true
+    channels: [id],
+    withPresence: true
 });
 
 // Eseménykezelő az "presence" események figyelésére
