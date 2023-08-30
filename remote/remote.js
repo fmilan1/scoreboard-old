@@ -13,6 +13,8 @@ const remoteteam2subpoint = document.querySelector('.subpoint2')
 
 const connectionstate = document.querySelector('.connectionstate');
 
+let isConnected = false
+
 team1pointButtons.forEach(btn => {
     btn.addEventListener('mousedown', (e) => {
         sendMessage({
@@ -20,6 +22,7 @@ team1pointButtons.forEach(btn => {
             event: e,
             value: e.target.innerHTML
         }, 'add');
+        if (!isConnected) return;
         remoteteam1point.innerHTML = eval(remoteteam1point.innerHTML + btn.innerHTML + 1)
     });
 });
@@ -31,6 +34,7 @@ team2pointButtons.forEach(btn => {
             event: e,
             value: e.target.innerHTML
         }, 'add');
+        if (!isConnected) return;
         remoteteam2point.innerHTML = eval(remoteteam2point.innerHTML + btn.innerHTML + 1)
     });
 
@@ -43,6 +47,7 @@ team1subpointButtons.forEach(btn => {
             event: e,
             value: e.target.innerHTML
         }, 'add');
+        if (!isConnected) return;
         remoteteam1subpoint.innerHTML = eval(remoteteam1subpoint.innerHTML + btn.innerHTML + 1)
     });
 });
@@ -54,6 +59,7 @@ team2subpointButtons.forEach(btn => {
             event: e,
             value: e.target.innerHTML
         }, 'add');
+        if (!isConnected) return;
         remoteteam2subpoint.innerHTML = eval(remoteteam2subpoint.innerHTML + btn.innerHTML + 1)
     });
 });
@@ -81,11 +87,14 @@ remoteteam1nametext.addEventListener('keydown', (e) => {
 });
 
 remoteteam1nametext.addEventListener('mousedown', () => {
+    if (!isConnected) return;
+    remoteteam1nametext.setAttribute('contenteditable', true);
     remoteteam1nametext.classList.add('textbox');
     remoteteam1applybtn.classList.remove('hidden');
 });
 
 remoteteam1applybtn.addEventListener('click', () => {
+    remoteteam1nametext.setAttribute('contenteditable', false);
     remoteteam1nametext.classList.remove('textbox');
     remoteteam1applybtn.classList.add('hidden');
     sendMessage({
@@ -105,11 +114,14 @@ remoteteam2nametext.addEventListener('keydown', (e) => {
 });
 
 remoteteam2nametext.addEventListener('mousedown', () => {
+    if (!isConnected) return;
+    remoteteam2nametext.setAttribute('contenteditable', true);
     remoteteam2nametext.classList.add('textbox');
     remoteteam2applybtn.classList.remove('hidden');
 });
 
 remoteteam2applybtn.addEventListener('click', () => {
+    remoteteam2nametext.setAttribute('contenteditable', false);
     remoteteam2nametext.classList.remove('textbox');
     remoteteam2applybtn.classList.add('hidden');
     sendMessage({

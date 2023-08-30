@@ -67,11 +67,13 @@ pubnub.addListener({
             } catch(e) {}
             try {    
                 connectionstate.innerHTML = "Connected"
+                isConnected = true;
             } catch(e) {}
         }
     } else if (event.action === 'leave') {
         try {
             connectionstate.innerHTML = "Disconnected"
+            isConnected = false;
         } catch(e) {}
             console.log(event.uuid + ' kilépett a csatornából.');
         }
