@@ -77,6 +77,7 @@ function endPos(e) {
 	deltaX = e.changedTouches[0].clientX - startx;
 	deltaY = e.changedTouches[0].clientY - starty;
 	if (deltaX < offset && deltaY > offset) {
+        if (parseInt(e.target.innerHTML) <= 0) return;
 		e.target.innerHTML = parseInt(e.target.innerHTML) - 1;
 	}
 }
