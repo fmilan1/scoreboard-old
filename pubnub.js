@@ -12,8 +12,8 @@ const showMessage = (msg) => {
         }
         else if (msg.type == 'sync') {
             let target = eval(msg.message.target)
-            eval(target).innerHTML = msg.message.value
-            eval(target).value = msg.message.value
+            target.innerHTML = msg.message.value
+            target.value = msg.message.value
             target.dispatchEvent(new Event('input'))
         }
     }

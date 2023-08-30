@@ -35,18 +35,10 @@ let root = document.documentElement;
 
 team1point.addEventListener("mousedown", (e) => {
     teamclick(e);
-    sendMessage({
-        target: 'remoteteam1point',
-        value: team1point.innerHTML
-    }, 'sync');
 });
 
 team2point.addEventListener("mousedown", (e) => {
     teamclick(e);
-    sendMessage({
-        target: 'remoteteam2point',
-        value: team2point.innerHTML
-    }, 'sync');
 });
 
 team1point.addEventListener("long-press", () => {team1point.innerHTML = 0; save()})
@@ -56,18 +48,10 @@ team2subpoint.addEventListener("long-press", () => {team2subpoint.innerHTML = 0;
 
 team1subpoint.addEventListener("mousedown", (e) => {
     teamclick(e);
-    sendMessage({
-        target: 'remoteteam1subpoint',
-        value: team1subpoint.innerHTML
-    }, 'sync');
 });
 
 team2subpoint.addEventListener("mousedown", (e) => {
     teamclick(e);
-    sendMessage({
-        target: 'remoteteam2subpoint',
-        value: team2subpoint.innerHTML
-    }, 'sync');
 });
 
 let startx, starty, offset = 20;
@@ -252,6 +236,23 @@ function resetpoints() {
 	team2point.innerHTML = 0;
 	team1subpoint.innerHTML = 0;
 	team2subpoint.innerHTML = 0;
+    sendMessage({
+        target: "remoteteam1point",
+        value: team1point.innerHTML
+    }, 'sync');
+        sendMessage({
+        target: "remoteteam2point",
+        value: team1point.innerHTML
+    }, 'sync');
+    sendMessage({
+        target: "remoteteam1subpoint",
+        value: team1subpoint.innerHTML
+    }, 'sync');
+    sendMessage({
+        target: "remoteteam2subpoint",
+        value: team2subpoint.innerHTML
+    }, 'sync');
+
 	save();
 }
 
@@ -280,11 +281,15 @@ function reset() {
 }
 
 function teamclick(e) {
+	let target = e.target;
 	let a = 1;
 	if (e.button == 2) a = -1;
-	let target = e.target;
+    if (parseInt(target.innerHTML) <= 0 && a == -1) return;
 	target.innerHTML = parseInt(target.innerHTML) + a;
-
+    sendMessage({
+        target: "remote" + target.id,
+        value: target.innerHTML
+    }, 'sync');
 	save();
 }
 

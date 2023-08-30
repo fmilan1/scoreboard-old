@@ -17,50 +17,46 @@ let isConnected = false
 
 team1pointButtons.forEach(btn => {
     btn.addEventListener('mousedown', (e) => {
+        if (!isConnected) return;
         sendMessage({
             target: 'team1point',
             event: e,
             value: e.target.innerHTML
         }, 'add');
-        if (!isConnected) return;
-        remoteteam1point.innerHTML = eval(remoteteam1point.innerHTML + btn.innerHTML + 1)
     });
 });
 
 team2pointButtons.forEach(btn => {
     btn.addEventListener('mousedown', (e) => {
+        if (!isConnected) return;
         sendMessage({
             target: 'team2point',
             event: e,
             value: e.target.innerHTML
         }, 'add');
-        if (!isConnected) return;
-        remoteteam2point.innerHTML = eval(remoteteam2point.innerHTML + btn.innerHTML + 1)
     });
 
 });
 
 team1subpointButtons.forEach(btn => {
     btn.addEventListener('mousedown', (e) => {
+        if (!isConnected) return;
         sendMessage({
             target: 'team1subpoint',
             event: e,
             value: e.target.innerHTML
         }, 'add');
-        if (!isConnected) return;
-        remoteteam1subpoint.innerHTML = eval(remoteteam1subpoint.innerHTML + btn.innerHTML + 1)
     });
 });
 
 team2subpointButtons.forEach(btn => {
     btn.addEventListener('mousedown', (e) => {
+        if (!isConnected) return;
         sendMessage({
             target: 'team2subpoint',
             event: e,
             value: e.target.innerHTML
         }, 'add');
-        if (!isConnected) return;
-        remoteteam2subpoint.innerHTML = eval(remoteteam2subpoint.innerHTML + btn.innerHTML + 1)
     });
 });
 
