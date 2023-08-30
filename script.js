@@ -33,17 +33,42 @@ team2nametextbox.addEventListener("input", () => {refresh_teams(); save();})
 
 let root = document.documentElement;
 
-team1point.addEventListener("mousedown", teamclick);
-team2point.addEventListener("mousedown", teamclick);
+team1point.addEventListener("mousedown", (e) => {
+    teamclick(e);
+    sendMessage({
+        target: 'remoteteam1point',
+        value: team1point.innerHTML
+    }, 'sync');
+});
 
+team2point.addEventListener("mousedown", (e) => {
+    teamclick(e);
+    sendMessage({
+        target: 'remoteteam2point',
+        value: team2point.innerHTML
+    }, 'sync');
+});
 
 team1point.addEventListener("long-press", () => {team1point.innerHTML = 0; save()})
 team2point.addEventListener("long-press", () => {team2point.innerHTML = 0; save()})
 team1subpoint.addEventListener("long-press", () => {team1subpoint.innerHTML = 0; save()})
 team2subpoint.addEventListener("long-press", () => {team2subpoint.innerHTML = 0; save()})
 
-team1subpoint.addEventListener("mousedown", teamclick);
-team2subpoint.addEventListener("mousedown", teamclick);
+team1subpoint.addEventListener("mousedown", (e) => {
+    teamclick(e);
+    sendMessage({
+        target: 'remoteteam1subpoint',
+        value: team1subpoint.innerHTML
+    }, 'sync');
+});
+
+team2subpoint.addEventListener("mousedown", (e) => {
+    teamclick(e);
+    sendMessage({
+        target: 'remoteteam2subpoint',
+        value: team2subpoint.innerHTML
+    }, 'sync');
+});
 
 let startx, starty, offset = 20;
 team1point.addEventListener('touchstart', startPos)

@@ -84,14 +84,14 @@ pubnub.addListener({
 });
 
 // Üzenet küldése a csatornán keresztül
-function sendMessage(msg, state) {
+function sendMessage(msg, type) {
 
-pubnub.publish({
-    channel: id,
-    message: {
-        type: state,
-        message: msg,
-        sender: pubnub.getUUID()
-    }
-});
+    pubnub.publish({
+        channel: id,
+        message: {
+            type: type,
+            message: msg,
+            sender: pubnub.getUUID()
+        }
+    });
 }
